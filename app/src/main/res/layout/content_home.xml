@@ -7,19 +7,32 @@
     android:layout_height="match_parent"
     android:orientation="vertical"
     tools:context="com.kiwabolab.lisa.vista.Home">
-    <TextView
-        android:id="@+id/textView"
+    <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="40sp"
-        android:text="Escannear Factura"
-        android:textAlignment="center"
-        android:gravity="center_vertical"
-        android:textColor="#ffffff"
-        android:layout_gravity="center"
-        android:textAllCaps="false"
-        android:textSize="18sp"
-        android:background="@color/colorPrimary"
-        android:textStyle="normal|bold"/>
+        android:layout_height="40dp">
+        <TextView
+            android:id="@+id/textView"
+            android:layout_width="match_parent"
+            android:layout_height="40sp"
+            android:text="Escannear Factura"
+            android:textAlignment="center"
+            android:gravity="center_vertical"
+            android:textColor="#ffffff"
+            android:layout_gravity="center"
+            android:textAllCaps="false"
+            android:textSize="18sp"
+            android:background="@color/colorPrimary"
+            android:textStyle="normal|bold"/>
+        <ImageView
+            android:layout_width="35dp"
+            android:layout_height="35dp"
+            android:src="@mipmap/bill"
+            android:clickable="true"
+            android:layout_marginLeft="5dp"
+            android:onClick="gotoFacturas"/>
+
+    </RelativeLayout>
+
     <ScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent"

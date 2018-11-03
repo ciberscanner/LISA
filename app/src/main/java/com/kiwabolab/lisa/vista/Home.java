@@ -63,6 +63,8 @@ public class Home extends AppCompatActivity implements contratoFactura.VistaFact
     private ArrayList<TextBlock> bloques;
     private ArrayList<TextBlock> bloqueN;
 
+    private List<Factura>facturas;
+
     private FacturaPresenter presenter;
 
     @BindView(R.id.results)TextView scanResults;
@@ -113,8 +115,6 @@ public class Home extends AppCompatActivity implements contratoFactura.VistaFact
         });
         obtenerFacturas();
     }
-    //----------------------------------------------------------------------------------------------
-    //
     //----------------------------------------------------------------------------------------------
     //
     @Override
@@ -345,6 +345,18 @@ public class Home extends AppCompatActivity implements contratoFactura.VistaFact
                 .openInputStream(uri), null, bmOptions);
     }
     //----------------------------------------------------------------------------------------------
+    //
+    public void gotoFacturas(View view){
+        if(!facturas.isEmpty()){
+            Intent intent = new Intent(getApplicationContext(), VerFacturas.class);
+            intent.putExtra("VALOR", "FALLAS");
+            startActivity(intent);
+        }else{
+            Toasty.warning(this, "No hay facturas para mostrar", Toast.LENGTH_SHORT, true).show();
+
+        }
+    }
+    //----------------------------------------------------------------------------------------------
     //----------------------------------------------------------------------------------------------
 
     @Override
@@ -367,6 +379,7 @@ public class Home extends AppCompatActivity implements contratoFactura.VistaFact
     //
     @Override
     public void obtenerFacturasOk(List<Factura> facturas) {
+        this.facturas=facturas;
         Toasty.success(this, "Facturas cargadas", Toast.LENGTH_SHORT, true).show();
     }
     //----------------------------------------------------------------------------------------------
