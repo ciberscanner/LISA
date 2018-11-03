@@ -22,6 +22,7 @@ import android.util.SparseArray;
 import android.view.View;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -31,21 +32,25 @@ import com.google.android.gms.vision.text.TextBlock;
 import com.google.android.gms.vision.text.TextRecognizer;
 import com.kiwabolab.lisa.BuildConfig;
 import com.kiwabolab.lisa.R;
+import com.kiwabolab.lisa.modelo.Factura;
+import com.kiwabolab.lisa.presentacion.FacturaPresenter;
+import com.kiwabolab.lisa.presentacion.contratoFactura;
 import com.kiwabolab.lisa.util.CheckField;
 
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.util.ArrayList;
+import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import es.dmoral.toasty.Toasty;
 
-public class Home extends AppCompatActivity {
+public class Home extends AppCompatActivity implements contratoFactura.VistaFactura {
     //----------------------------------------------------------------------------------------------
     //Variables
     private static final String LOG_TAG = "Text API";
     private static final int PHOTO_REQUEST = 10;
-    private TextView scanResults;
     private Uri imageUri;
     private TextRecognizer detector;
     private static final int REQUEST_WRITE_PERMISSION = 20;
@@ -58,11 +63,15 @@ public class Home extends AppCompatActivity {
     private ArrayList<TextBlock> bloques;
     private ArrayList<TextBlock> bloqueN;
 
+    private FacturaPresenter presenter;
 
+    @BindView(R.id.results)TextView scanResults;
     @BindView(R.id.nombreempresa)TextView nombre;
     @BindView(R.id.fechaempresa)TextView fecha;
     @BindView(R.id.numerofactura)TextView numero;
     @BindView(R.id.total)TextView total;
+    @BindView(R.id.progressBar)ProgressBar progressBar;
+
     //----------------------------------------------------------------------------------------------
     //Constructor
     @Override
@@ -71,7 +80,7 @@ public class Home extends AppCompatActivity {
         setContentView(R.layout.activity_home);
         ButterKnife.bind(this);
 
-        scanResults = (TextView) findViewById(R.id.results);
+        presenter= new FacturaPresenter(this);
 
         lineas= new ArrayList<>();
         palabras = new ArrayList<>();
@@ -102,6 +111,7 @@ public class Home extends AppCompatActivity {
                 //Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG).setAction("Action", null).show();
             }
         });
+        obtenerFacturas();
     }
     //----------------------------------------------------------------------------------------------
     //
@@ -333,5 +343,73 @@ public class Home extends AppCompatActivity {
 
         return BitmapFactory.decodeStream(ctx.getContentResolver()
                 .openInputStream(uri), null, bmOptions);
+    }
+    //----------------------------------------------------------------------------------------------
+    //----------------------------------------------------------------------------------------------
+
+    @Override
+    public void ShowLoadin() {
+        progressBar.setVisibility(View.VISIBLE);
+    }
+    //----------------------------------------------------------------------------------------------
+    //
+    @Override
+    public void CloseLoading() {
+        progressBar.setVisibility(View.GONE);
+    }
+    //----------------------------------------------------------------------------------------------
+    //
+    @Override
+    public void obtenerFacturas() {
+        presenter.obtenerFacturas();
+    }
+    //----------------------------------------------------------------------------------------------
+    //
+    @Override
+    public void obtenerFacturasOk(List<Factura> facturas) {
+        Toasty.success(this, "Facturas cargadas", Toast.LENGTH_SHORT, true).show();
+    }
+    //----------------------------------------------------------------------------------------------
+    //
+    @Override
+    public void obtenerFacturasError() {
+        Toasty.error(this, "No se puedo Obtener las facturas", Toast.LENGTH_SHORT, true).show();
+
+    }
+    //----------------------------------------------------------------------------------------------
+    //
+    @Override
+    public void obtenerFactura(String id) {
+
+    }
+    //----------------------------------------------------------------------------------------------
+    //
+    @Override
+    public void obtenerFacturaOk(Factura factura) {
+
+    }
+    //----------------------------------------------------------------------------------------------
+    //
+    @Override
+    public void obtenerFacturaError() {
+
+    }
+    //----------------------------------------------------------------------------------------------
+    //
+    @Override
+    public void enviarFactura(Factura factura) {
+
+    }
+    //----------------------------------------------------------------------------------------------
+    //
+    @Override
+    public void enviarFacturaOk() {
+
+    }
+    //----------------------------------------------------------------------------------------------
+    //
+    @Override
+    public void enviarFacturaError() {
+
     }
 }
