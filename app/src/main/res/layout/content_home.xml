@@ -30,9 +30,7 @@
             android:clickable="true"
             android:layout_marginLeft="5dp"
             android:onClick="gotoFacturas"/>
-
     </RelativeLayout>
-
     <ScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
@@ -96,4 +94,5 @@
                 android:layout_marginTop="8dp"/>
         </LinearLayout>
     </ScrollView>
+
 </LinearLayout>

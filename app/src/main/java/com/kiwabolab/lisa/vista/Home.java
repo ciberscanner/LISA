@@ -63,7 +63,7 @@ public class Home extends AppCompatActivity implements contratoFactura.VistaFact
     private ArrayList<TextBlock> bloques;
     private ArrayList<TextBlock> bloqueN;
 
-    private List<Factura>facturas;
+    public static List<Factura>facturas;
 
     private FacturaPresenter presenter;
 
@@ -73,7 +73,6 @@ public class Home extends AppCompatActivity implements contratoFactura.VistaFact
     @BindView(R.id.numerofactura)TextView numero;
     @BindView(R.id.total)TextView total;
     @BindView(R.id.progressBar)ProgressBar progressBar;
-
     //----------------------------------------------------------------------------------------------
     //Constructor
     @Override
@@ -185,6 +184,11 @@ public class Home extends AppCompatActivity implements contratoFactura.VistaFact
         }
     }
     //----------------------------------------------------------------------------------------------
+    //
+    private void alinearTextos(){
+
+    }
+    //----------------------------------------------------------------------------------------------
     //Procesar bloques
     private void procesarDatos(SparseArray<TextBlock> textBlocks){
         Log.v("TAMAÑO",textBlocks.size()+"");
@@ -222,8 +226,6 @@ public class Home extends AppCompatActivity implements contratoFactura.VistaFact
                 //return;
             }
         }
-        //Quicksort(textBlocks,  0,  textBlocks.size()-1);
-
         sera();
         Log.v("Salida","SERA");
         Log.v("Bloque",bloqueN.size()+"");
@@ -233,11 +235,8 @@ public class Home extends AppCompatActivity implements contratoFactura.VistaFact
             if(tBlock!=null){
                 texto = texto + tBlock.getValue()+ "\n" + "\n";
             }
-
         }
         scanResults.setText(texto);
-
-
     }
 
     //----------------------------------------------------------------------------------------------
@@ -266,8 +265,6 @@ public class Home extends AppCompatActivity implements contratoFactura.VistaFact
     //----------------------------------------------------------------------------------------------
     //
     void Quicksort(SparseArray<TextBlock> textBlocks, int first, int last) {
-
-
         int i=first, j=last;
         TextBlock pivote=textBlocks.get((first + last) / 2);
         TextBlock auxiliar;
@@ -297,7 +294,6 @@ public class Home extends AppCompatActivity implements contratoFactura.VistaFact
             texto = texto + tBlock.getValue() + "\n" + "\n";
         }
         scanResults.setText(texto);
-
     }
     //----------------------------------------------------------------------------------------------
     //
@@ -349,11 +345,13 @@ public class Home extends AppCompatActivity implements contratoFactura.VistaFact
     public void gotoFacturas(View view){
         if(!facturas.isEmpty()){
             Intent intent = new Intent(getApplicationContext(), VerFacturas.class);
-            intent.putExtra("VALOR", "FALLAS");
+            intent.putExtra("FACTURAS", "FALLAS");
+
+            //intent.putse("FACTURAS", ArrayList<Factura>facturas);
+
             startActivity(intent);
         }else{
             Toasty.warning(this, "No hay facturas para mostrar", Toast.LENGTH_SHORT, true).show();
-
         }
     }
     //----------------------------------------------------------------------------------------------
